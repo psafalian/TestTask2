@@ -1,0 +1,19 @@
+version: 1.0
+configuration:
+  has_webserver: true
+  scoring:
+    command: "npm test"
+    files:
+      - unit.xml
+  readonly_paths:
+    - test
+  ide_config:
+    default_open_files:
+      - models/trades.js
+      - routes/trades.js
+      - controllers/trades.js
+      - connection.js
+    project_menu:
+      run: npm start
+      install: npm install
+      test: npm test
