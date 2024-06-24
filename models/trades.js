@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 
 const tradeSchema = new mongoose.Schema({
+    id: {
+        type: Number,
+        required: true,
+        unique: true
+    },
     type: {
         type: String,
         enum: ['buy', 'sell'],
