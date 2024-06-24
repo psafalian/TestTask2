@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const connectionManager = require('./connection'); // Ensure this path is correct
+const connectionManager = require('./connection'); 
 const tradesRouter = require('./routes/trades');
 
 const app = express();
@@ -8,7 +8,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use('/trades', tradesRouter);
 
-connectionManager.getConnection() // Ensure connection is established when app starts
+connectionManager.getConnection() 
     .then(() => {
         console.log('Database connected');
     })
