@@ -13,7 +13,7 @@ router.post('/', async (req, res) => {
         const trade = new Trade({ id: currentId++, type, user_id, symbol, shares, price, timestamp });
         await trade.save();
         const tradeObject = trade.toObject();
-        delete tradeObject._id; // Remove the _id field
+        delete tradeObject._id; 
         res.status(201).json(tradeObject);
     } catch (error) {
         res.status(500).json({ error: 'Failed to create trade' });
@@ -24,14 +24,20 @@ router.get('/', async (req, res) => {
     const { type, user_id } = req.query;
     const filter = {};
     if (type) filter.type = type;
-    if (user_id) filter.user_id = user_id;
+    if (user_id) filter.user_id = parseInt(user_id, 10);
+
+    console.log('Filter:', filter); 
+
     try {
-        const trades = await Trade.find(filter).sort({ id: 1 }); // Ensure sorting by id
+        const trades = await Trade.find(filter).sort({ price: 1 }); 
         const tradesArray = trades.map(trade => {
             const tradeObject = trade.toObject();
-            delete tradeObject._id; // Remove the _id field
+            delete tradeObject._id; 
             return tradeObject;
         });
+
+        console.log('Trades:', tradesArray); 
+
         res.status(200).json(tradesArray);
     } catch (error) {
         res.status(500).json({ error: 'Failed to retrieve trades' });
@@ -44,10 +50,10 @@ router.get('/:id', async (req, res) => {
         const trade = await Trade.findOne({ id: Number(id) });
         if (trade) {
             const tradeObject = trade.toObject();
-            delete tradeObject._id; // Remove the _id field
+            delete tradeObject._id; 
             res.status(200).json(tradeObject);
         } else {
-            res.status(404).send('ID not found'); // Match expected error message
+            res.status(404).send('ID not found'); 
         }
     } catch (error) {
         res.status(500).json({ error: 'Failed to retrieve trade' });
